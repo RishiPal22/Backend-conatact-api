@@ -1,31 +1,32 @@
 const express =  require('express');
 const app = express();
+const asynchandler = require('express-async-handler')
 
-const getContacts = (req,res) => {
+const getContacts = asynchandler( async (req,res) => {
     res.status(200).json({message : 'Get all contacts'})
-};
+});
 
-const createContact = (req,res) => {
+const createContact =asynchandler( async  (req,res) => {
     console.log(req.body)
     const {name, email, phone} = req.body;
     if (!name || !email || !phone){
-        res.status(400);
+        res.status(404);
         throw new Error("All the fields are mandatory")
     }
     res.status(201).json({message : ' contact created'})
-};
+});
 
-const getContact = (req,res) => {
+const getContact = asynchandler( async (req,res) => {
     res.status(201).json({message :`Get contact for ${req.params.id}`})
-};
+});
 
-const updateContact = (req,res) => {
+const updateContact = asynchandler( async (req,res) => {
     res.status(201).json({message : `Contact id for ${req.params.id} is updated `})
-};
+});
 
-const deleteContact = (req,res) => {
+const deleteContact = asynchandler( async (req,res) => {
     res.status(201).json({message : `Contact id for ${req.params.id} got deleted `})
-};
+});
 
 
 module.exports = {getContacts, createContact, getContact, updateContact, deleteContact }
